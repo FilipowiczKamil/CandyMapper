@@ -1,4 +1,4 @@
-import test, { expect } from '@playwright/test';
+import { expect, test } from '@fixtures/uiPopupClosed';
 import { homePageType, HomePage } from 'src/pages/homePage';
 
 let homePage: homePageType;
