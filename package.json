@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "playwright test",
     "lint": "eslint . --ext .ts --config eslint.config.js",
     "format": "prettier --write ."
   },
