@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
+    "module": "ES2022",
+    "target": "ES2022",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pages/*": ["src/page/*"],
+      "@utils/*": ["src/utils/*"],
+      "@models/*": ["src/utils/models/*"],
+      "@data/*": ["src/data/*"],
+      "@fixtures/*": ["src/fixtures/*"]
+    }
+  }
+}
