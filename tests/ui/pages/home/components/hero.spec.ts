@@ -9,20 +9,23 @@ test.describe('Hero component test', () => {
   test.beforeEach(async ({ page }) => {
     actions = Home(page).actions;
     elements = Home(page).elements;
+
     await page.goto('/');
     await actions.scrollToHero();
   });
 
   test('Hero main elements should be visible', async () => {
-    await expect.soft(elements.heroDescription).toBeVisible();
-    await expect.soft(elements.heroHeading).toBeVisible();
-    await expect.soft(elements.heroImage).toBeVisible();
-    await expect.soft(elements.heroPhoneLink).toBeVisible();
+    await expect.soft(elements.heroDescription, 'Description should be visible').toBeVisible();
+    await expect.soft(elements.heroHeading, 'Heading should be visible').toBeVisible();
+    await expect.soft(elements.heroImage, 'Image should be visible').toBeVisible();
+    await expect.soft(elements.heroPhoneLink, 'Phone link should be visible').toBeVisible();
   });
 
   test('Visible phone number should match href', async () => {
     const heroNumber = await actions.getHeroPhoneNumber();
 
-    await expect.soft(elements.heroPhoneLink).toHaveAttribute('href', `tel:${heroNumber}`);
+    await expect
+      .soft(elements.heroPhoneLink, 'Phone link should have proper href attribute')
+      .toHaveAttribute('href', `tel:${heroNumber}`);
   });
 });
