@@ -1,10 +1,8 @@
 import { Page } from '@playwright/test';
-import { heroComponent } from 'src/components/hero/hero';
+import { Hero } from 'src/components/hero/hero';
 
-export type homePageType = ReturnType<typeof HomePage>;
-
-export const HomePage = (page: Page) => {
-  const hero = heroComponent(page);
+export const Home = (page: Page) => {
+  const hero = Hero(page);
 
   return {
     ...hero,

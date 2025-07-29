@@ -1,10 +1,8 @@
 import { Page } from '@playwright/test';
 import { heroSelectors } from './selectors';
-import { removeSpaces } from '@utils/replaceText';
+import { getText, removeSpaces, scrollToElement } from '@utils/helpers';
 
-// export type hero = ReturnType<typeof heroComponent>;
-
-export const heroComponent = (page: Page) => {
+export const Hero = (page: Page) => {
   const heroComponentWrapper = page.locator(heroSelectors.componentWrapper);
   const heroHeading = page.locator(heroSelectors.heading);
   const heroDescription = page.locator(heroSelectors.description);
@@ -12,12 +10,11 @@ export const heroComponent = (page: Page) => {
   const heroPhoneLink = page.locator(heroSelectors.phoneLink).locator('a');
 
   const scrollToHero = async (): Promise<void> => {
-    await heroComponentWrapper.scrollIntoViewIfNeeded();
+    await scrollToElement(heroComponentWrapper);
   };
 
   const getHeroPhoneNumber = async (): Promise<string> => {
-    const phoneLink = await heroPhoneLink.innerText();
-    return removeSpaces(phoneLink);
+    return removeSpaces(await getText(heroPhoneLink));
   };
 
   return {
