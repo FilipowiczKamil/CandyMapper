@@ -12,21 +12,11 @@ export const ContactUsForm = (page: Page) => {
   const contactUsMessage = page.locator(contactUsFormSelectors.message);
   const contactUsSubmit = page.getByRole('button', { name: 'submit' });
   const contactUsSuccess = page.locator(contactUsFormSelectors.successMessage);
+  const contactUsValidationMes = page.locator(contactUsFormSelectors.emailValidationMessage);
 
   const scrollToContactUs = async (): Promise<void> => {
     await scrollToElement(contactUsFormWrapper);
   };
-
-  // wait for promise is required for submit button to work
-  const networkPromise = page.waitForResponse((resp) => {
-    return (
-      resp.url().includes('/element/log?format=json&hasfast=true&authuser=0') &&
-      resp.status() === 200
-    );
-  });
-  const formSendRequest = page.waitForRequest(
-    (req) => req.url().includes('/v3/messages') && req.method() === 'POST',
-  );
 
   const fillForm = async (data: {
     firstName: string;
@@ -44,7 +34,9 @@ export const ContactUsForm = (page: Page) => {
   };
 
   const getFormSendRequestBody = async () => {
-    const request = formSendRequest;
+    const request = page.waitForRequest(
+      (req) => req.url().includes('/v3/messages') && req.method() === 'POST',
+    );
     const payload = (await request).postDataJSON() as ContactPayload;
 
     const getValue = (label: ContactFormField['label']) =>
@@ -61,13 +53,18 @@ export const ContactUsForm = (page: Page) => {
   };
 
   const submitForm = async (): Promise<void> => {
-    await networkPromise;
+    await page.waitForResponse((resp) => {
+      return (
+        resp.url().includes('/element/log?format=json&hasfast=true&authuser=0') &&
+        resp.status() === 200
+      );
+    });
     await contactUsSubmit.click({ force: true });
-    await contactUsSuccess.waitFor({ state: 'visible' });
   };
 
   return {
     elements: {
+      contactUsValidationMes,
       contactUsFormWrapper,
       contactUsFirstName,
       contactUsLastName,

@@ -1,5 +1,3 @@
-/* eslint-disable playwright/expect-expect */
-import { ac } from '@faker-js/faker/dist/airline-CLphikKp';
 import { expect, test } from '@fixtures/uiPopupClosed';
 import { generateContactUsFormData } from '@utils/formDataGenerator';
 import { ExtractReturn } from '@utils/types';
@@ -24,6 +22,7 @@ test.describe('Contact us form', () => {
       .toBeVisible();
     await actions.fillForm(formData);
     await actions.submitForm();
+    await elements.contactUsSuccess.waitFor({ state: 'visible' });
     await expect
       .soft(elements.contactUsSuccess, 'Success message should be visible after form submit')
       .toBeVisible();
@@ -62,5 +61,31 @@ test.describe('Contact us form', () => {
       .toBe(formData.phoneNumber);
   });
 
-  test('Email field should have validation', async () => {});
+  test('Email field should have validation', async () => {
+    await actions.submitForm();
+    await expect
+      .soft(
+        elements.contactUsValidationMes,
+        'Validation message should be visible if email is not entered',
+      )
+      .toBeVisible();
+
+    await expect
+      .soft(elements.contactUsValidationMes)
+      .toHaveText('Please enter a valid email address.');
+
+    await elements.contactUsEmail.fill('test');
+    await elements.contactUsSubmit.click();
+
+    await expect
+      .soft(
+        elements.contactUsValidationMes,
+        'Validation message should be visible if entered email is not valid',
+      )
+      .toBeVisible();
+
+    await expect
+      .soft(elements.contactUsValidationMes)
+      .toHaveText('Please enter a valid email address.');
+  });
 });

@@ -7,4 +7,5 @@ export const contactUsFormSelectors = {
   message: 'textarea[data-aid="CONTACT_FORM_MESSAGE"]',
   submitButton: '[data-aid="CONTACT_SUBMIT_BUTTON_REND"]',
   successMessage: '[data-aid="CONTACT_FORM_SUBMIT_SUCCESS"]',
+  emailValidationMessage: '[data-aid="CONTACT_EMAIL_ERR_REND"]',
 };
