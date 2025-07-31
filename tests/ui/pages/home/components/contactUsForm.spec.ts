@@ -1,38 +1,34 @@
 import { expect, test } from '@fixtures/uiPopupClosed';
 import { generateContactUsFormData } from '@utils/formDataGenerator';
 import { ExtractReturn } from '@utils/types';
-import { ContactUsForm } from 'src/components/contactUsForm/contactUsForm';
+import { Home } from 'src/pages/home';
 
-let elements: ExtractReturn<typeof ContactUsForm>['elements'];
-let actions: ExtractReturn<typeof ContactUsForm>['actions'];
+let home: ExtractReturn<typeof Home>;
 
 test.describe('Contact us form', () => {
   const formData = generateContactUsFormData();
   test.beforeEach(async ({ page }) => {
-    elements = ContactUsForm(page).elements;
-    actions = ContactUsForm(page).actions;
-    await page.goto('/');
+    home = Home(page);
+    await home.goTo();
     await page.waitForLoadState('domcontentloaded');
-    await actions.scrollToContactUs();
+    await home.scrollToContactUs();
   });
 
   test('Should fill form data and receive success message', async () => {
+    await expect.soft(home.contactUsFormWrapper, 'Contact Us form should be visible').toBeVisible();
+    await home.fillForm(formData);
+    await home.submitForm();
+    await home.contactUsSuccess.waitFor({ state: 'visible' });
     await expect
-      .soft(elements.contactUsFormWrapper, 'Contact Us form should be visible')
-      .toBeVisible();
-    await actions.fillForm(formData);
-    await actions.submitForm();
-    await elements.contactUsSuccess.waitFor({ state: 'visible' });
-    await expect
-      .soft(elements.contactUsSuccess, 'Success message should be visible after form submit')
+      .soft(home.contactUsSuccess, 'Success message should be visible after form submit')
       .toBeVisible();
   });
 
   test('Filled data should match data in request', async () => {
-    await actions.fillForm(formData);
-    await actions.submitForm();
+    await home.fillForm(formData);
+    await home.submitForm();
 
-    const requestBody = await actions.getFormSendRequestBody();
+    const requestBody = await home.getFormSendRequestBody();
 
     expect
       .soft(requestBody.email, 'Request body should contain the same mail as entered in form')
@@ -62,30 +58,30 @@ test.describe('Contact us form', () => {
   });
 
   test('Email field should have validation', async () => {
-    await actions.submitForm();
+    await home.submitForm();
     await expect
       .soft(
-        elements.contactUsValidationMes,
+        home.contactUsValidationMes,
         'Validation message should be visible if email is not entered',
       )
       .toBeVisible();
 
     await expect
-      .soft(elements.contactUsValidationMes)
+      .soft(home.contactUsValidationMes)
       .toHaveText('Please enter a valid email address.');
 
-    await elements.contactUsEmail.fill('test');
-    await elements.contactUsSubmit.click();
+    await home.contactUsEmail.fill('test');
+    await home.contactUsSubmit.click();
 
     await expect
       .soft(
-        elements.contactUsValidationMes,
+        home.contactUsValidationMes,
         'Validation message should be visible if entered email is not valid',
       )
       .toBeVisible();
 
     await expect
-      .soft(elements.contactUsValidationMes)
+      .soft(home.contactUsValidationMes)
       .toHaveText('Please enter a valid email address.');
   });
 });

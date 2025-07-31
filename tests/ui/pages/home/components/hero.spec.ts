@@ -1,31 +1,28 @@
 import { expect, test } from '@fixtures/uiPopupClosed';
 import { ExtractReturn } from '@utils/types';
-import { Home } from 'src/pages/homePage';
+import { Home } from 'src/pages/home';
 
-let actions: ExtractReturn<typeof Home>['actions'];
-let elements: ExtractReturn<typeof Home>['elements'];
+let home: ExtractReturn<typeof Home>;
 
 test.describe('Hero component test', () => {
   test.beforeEach(async ({ page }) => {
-    actions = Home(page).actions;
-    elements = Home(page).elements;
-
-    await page.goto('/');
-    await actions.scrollToHero();
+    home = Home(page);
+    await home.goTo();
+    await home.scrollToHero();
   });
 
   test('Hero main elements should be visible', async () => {
-    await expect.soft(elements.heroDescription, 'Description should be visible').toBeVisible();
-    await expect.soft(elements.heroHeading, 'Heading should be visible').toBeVisible();
-    await expect.soft(elements.heroImage, 'Image should be visible').toBeVisible();
-    await expect.soft(elements.heroPhoneLink, 'Phone link should be visible').toBeVisible();
+    await expect.soft(home.heroDescription, 'Description should be visible').toBeVisible();
+    await expect.soft(home.heroHeading, 'Heading should be visible').toBeVisible();
+    await expect.soft(home.heroImage, 'Image should be visible').toBeVisible();
+    await expect.soft(home.heroPhoneLink, 'Phone link should be visible').toBeVisible();
   });
 
   test('Visible phone number should match href', async () => {
-    const heroNumber = await actions.getHeroPhoneNumber();
+    const heroNumber = await home.getHeroPhoneNumber();
 
     await expect
-      .soft(elements.heroPhoneLink, 'Phone link should have proper href attribute')
+      .soft(home.heroPhoneLink, 'Phone link should have proper href attribute')
       .toHaveAttribute('href', `tel:${heroNumber}`);
   });
 });

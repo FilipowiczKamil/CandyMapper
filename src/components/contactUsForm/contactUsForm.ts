@@ -63,22 +63,19 @@ export const ContactUsForm = (page: Page) => {
   };
 
   return {
-    elements: {
-      contactUsValidationMes,
-      contactUsFormWrapper,
-      contactUsFirstName,
-      contactUsLastName,
-      contactUsEmail,
-      contactUsPhone,
-      contactUsMessage,
-      contactUsSubmit,
-      contactUsSuccess,
-    },
-    actions: {
-      fillForm,
-      submitForm,
-      scrollToContactUs,
-      getFormSendRequestBody,
-    },
+    contactUsValidationMes,
+    contactUsFormWrapper,
+    contactUsFirstName,
+    contactUsLastName,
+    contactUsEmail,
+    contactUsPhone,
+    contactUsMessage,
+    contactUsSubmit,
+    contactUsSuccess,
+
+    fillForm,
+    submitForm,
+    scrollToContactUs,
+    getFormSendRequestBody,
   };
 };

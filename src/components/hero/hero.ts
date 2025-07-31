@@ -18,15 +18,12 @@ export const Hero = (page: Page) => {
   };
 
   return {
-    actions: {
-      scrollToHero,
-      getHeroPhoneNumber,
-    },
-    elements: {
-      heroHeading,
-      heroDescription,
-      heroImage,
-      heroPhoneLink,
-    },
+    scrollToHero,
+    getHeroPhoneNumber,
+
+    heroHeading,
+    heroDescription,
+    heroImage,
+    heroPhoneLink,
   };
 };

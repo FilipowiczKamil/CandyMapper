@@ -32,19 +32,16 @@ export const ConnectSocials = (page: Page) => {
   };
 
   return {
-    elements: {
-      connectSocialsWrapper,
-      connectSocialsLinksWrapper,
-      connectSocialsFacebook,
-      connectSocialsInstagram,
-      connectSocialsLinkedin,
-      connectSocialsPinterest,
-      connectSocialsX,
-      connectSocialsYouTube,
-    },
-    actions: {
-      scrollToConnectSocials,
-      getLinkStatus,
-    },
+    connectSocialsWrapper,
+    connectSocialsLinksWrapper,
+    connectSocialsFacebook,
+    connectSocialsInstagram,
+    connectSocialsLinkedin,
+    connectSocialsPinterest,
+    connectSocialsX,
+    connectSocialsYouTube,
+
+    scrollToConnectSocials,
+    getLinkStatus,
   };
 };
