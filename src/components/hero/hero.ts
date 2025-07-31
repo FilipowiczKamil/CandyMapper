@@ -20,7 +20,6 @@ export const Hero = (page: Page) => {
   return {
     scrollToHero,
     getHeroPhoneNumber,
-
     heroHeading,
     heroDescription,
     heroImage,

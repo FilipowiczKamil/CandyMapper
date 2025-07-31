@@ -9,3 +9,10 @@ export const getText = async (elem: Locator): Promise<string> => {
 export const removeSpaces = (str: string): string => {
   return str.replace(/\s+/g, '');
 };
+export const getHrefAttr = async (elem: Locator): Promise<string> => {
+  const href = await elem.getAttribute('href');
+  if (!href) {
+    throw Error('Element is missing href attribute');
+  }
+  return href;
+};
