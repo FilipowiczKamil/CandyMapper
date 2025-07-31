@@ -9,3 +9,11 @@ export const generateContactUsFormData = () => {
     message: faker.lorem.paragraph(),
   };
 };
+
+export const generateProfileData = () => {
+  return {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    phoneNumber: faker.phone.number({ style: 'international' }),
+  };
+};
