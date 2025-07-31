@@ -8,11 +8,11 @@ export const Login = (page: Page) => {
   const resetPasswordButton = page.locator(loginSelectors.resetPasswordButton);
   const createAccountButton = page.locator(loginSelectors.createAccountButton).locator('a');
 
-  const goTo = async () => {
+  const goTo = async (): Promise<void> => {
     await page.goto('/m/login');
   };
 
-  const signIn = async () => {
+  const signIn = async (): Promise<void> => {
     const username = process.env.CANDY_LOGIN;
     const password = process.env.CANDY_PASSWORD;
 

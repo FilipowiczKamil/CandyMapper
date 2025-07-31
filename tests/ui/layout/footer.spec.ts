@@ -12,17 +12,21 @@ test.describe('Footer', () => {
   });
 
   test('Footer elements should be visible', async () => {
-    await expect.soft(footer.menuElement.first()).toBeVisible();
-    await expect.soft(footer.businessName).toBeVisible();
-    await expect.soft(footer.address).toBeVisible();
-    await expect.soft(footer.phone).toBeVisible();
-    await expect.soft(footer.copyrights).toBeVisible();
+    await expect
+      .soft(footer.menuElement.first(), 'Menu link elements should be visible')
+      .toBeVisible();
+    await expect.soft(footer.businessName, 'Business name should be visible ').toBeVisible();
+    await expect.soft(footer.address, 'Address field should be visible').toBeVisible();
+    await expect.soft(footer.phone, 'Phone number should be visible').toBeVisible();
+    await expect.soft(footer.copyrights, 'Copyrights text should be visible').toBeVisible();
   });
 
   test('Footer link should return status 200', async ({ page, baseURL }) => {
     await footer.menuElement.nth(1).click();
     const menuElementHref = await getHrefAttr(footer.menuElement.nth(1));
     const response = await page.goto(`${baseURL}${menuElementHref}`);
-    expect.soft(response?.status()).toBe(200);
+    expect
+      .soft(response?.status(), `Page ${baseURL}${menuElementHref} should return status 200`)
+      .toBe(200);
   });
 });

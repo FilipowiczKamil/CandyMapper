@@ -15,7 +15,7 @@ export const Account = (page: Page) => {
     hasText: /save/i,
   });
 
-  const goTo = async () => {
+  const goTo = async (): Promise<void> => {
     await page.goto('/m/account');
   };
 
