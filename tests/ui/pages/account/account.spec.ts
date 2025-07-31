@@ -16,15 +16,6 @@ test.describe('Account Page', () => {
     await account.goTo();
   });
 
-  test.afterAll(async ({ page }) => {
-    login = Login(page);
-    account = Account(page);
-    await login.goTo();
-    await login.signIn();
-    await account.goTo();
-    await account.restoreDefaultProfile();
-  });
-
   test('Account data after edit should change', async () => {
     const profileData = generateProfileData();
     await account.goToEditProfileSection();
@@ -36,10 +27,19 @@ test.describe('Account Page', () => {
     await account.editProfileData(profileData);
     await account.clickOnSaveButton();
 
-    await expect.soft(account.name).not.toHaveText(`${beforeChangeName} ${beforeChangeLastName}`);
-    await expect.soft(account.phone).not.toHaveText(`${beforeChangePhone}`);
+    await expect
+      .soft(account.name, 'Name should be different after change')
+      .not.toHaveText(`${beforeChangeName} ${beforeChangeLastName}`);
+    await expect
+      .soft(account.phone, 'Phone should be different after change')
+      .not.toHaveText(`${beforeChangePhone}`);
 
-    await expect.soft(account.name).toHaveText(`${profileData.firstName} ${profileData.lastName}`);
-    await expect.soft(account.phone).toContainText(profileData.phoneNumber);
+    await expect
+      .soft(account.name, `Name should be ${profileData.firstName} ${profileData.lastName}`)
+      .toHaveText(`${profileData.firstName} ${profileData.lastName}`);
+    await expect
+      .soft(account.phone, `Phone should be ${profileData.phoneNumber}`)
+      .toContainText(profileData.phoneNumber);
+    await account.restoreDefaultProfile();
   });
 });

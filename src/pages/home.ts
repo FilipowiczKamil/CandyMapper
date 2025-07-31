@@ -8,7 +8,7 @@ export const Home = (page: Page) => {
   const connectSocial = ConnectSocials(page);
   const contactUs = ContactUsForm(page);
 
-  const goTo = async () => {
+  const goTo = async (): Promise<void> => {
     await page.goto('/');
   };
 

@@ -72,7 +72,6 @@ export const ContactUsForm = (page: Page) => {
     contactUsMessage,
     contactUsSubmit,
     contactUsSuccess,
-
     fillForm,
     submitForm,
     scrollToContactUs,

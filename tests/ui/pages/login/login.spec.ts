@@ -20,7 +20,7 @@ test.describe('Login Page', () => {
     await expect
       .soft(
         account.heading,
-        'Account page should contain heaeding data that match logged in account',
+        'Account page should contain heading data that match logged in account',
       )
       .toHaveText(`Hello ${process.env.CANDY_NAME}`);
 

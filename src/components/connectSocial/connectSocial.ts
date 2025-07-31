@@ -12,7 +12,7 @@ export const ConnectSocials = (page: Page) => {
   const connectSocialsX = page.locator(connectSocialSelectors.xLink);
   const connectSocialsYouTube = page.locator(connectSocialSelectors.youtubeLink);
 
-  const scrollToConnectSocials = async () => {
+  const scrollToConnectSocials = async (): Promise<void> => {
     await scrollToElement(connectSocialsLinksWrapper);
   };
 
@@ -40,7 +40,6 @@ export const ConnectSocials = (page: Page) => {
     connectSocialsPinterest,
     connectSocialsX,
     connectSocialsYouTube,
-
     scrollToConnectSocials,
     getLinkStatus,
   };
