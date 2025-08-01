@@ -47,3 +47,11 @@ npx playwright install
 - `src/fixtures` : Contains fixtures to use when needed
 - `src/pages` : Contains pages
 - `src/utils` : Contains helper functions
+
+## How to run tests
+
+Run all tests
+```bash
+npm test
+```
+
