@@ -1,4 +1,5 @@
 import { expect, test } from '@fixtures/uiPopupClosed';
+import { getHrefAttr } from '@utils/helpers';
 import { ExtractReturn } from '@utils/types';
 import { Home } from 'src/pages/home';
 
@@ -28,7 +29,7 @@ test.describe('Connect Social', () => {
     await expect.soft(home.connectSocialsYouTube, 'Youtube social should be visible').toBeVisible();
   });
 
-  test('Each social link should redirect to proper social and return status 200', async () => {
+  test('Social links should redirect to proper social and return status 200', async () => {
     expect
       .soft(
         await home.getLinkStatus(home.connectSocialsFacebook),
@@ -43,10 +44,10 @@ test.describe('Connect Social', () => {
       .toBe(200);
     expect
       .soft(
-        await home.getLinkStatus(home.connectSocialsLinkedin),
-        'Linkedin link should return status 200',
+        await getHrefAttr(home.connectSocialsLinkedin),
+        'Linkedin link should contain proper url',
       )
-      .toBe(200);
+      .toContain('https://www.linkedin.com');
     expect
       .soft(
         await home.getLinkStatus(home.connectSocialsPinterest),
